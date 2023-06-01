@@ -196,29 +196,46 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 25.0,
-                        vertical: 5.0,
-                      ),
-                      decoration: const BoxDecoration(
-                        color: Color.fromRGBO(19, 96, 196, 1),
-                        borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                      ),
-                      child: Row(children: [
-                        const Icon(
-                          Icons.upload,
-                          color: Colors.white,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                          (states) {
+                            return (states.contains(MaterialState.hovered)
+                                ? const Color.fromRGBO(19, 96, 196, 1)
+                                : const Color.fromRGBO(26, 115, 232, 1));
+                          },
                         ),
-                        Text(
-                          "Import",
-                          style: GoogleFonts.poppins(
-                            textStyle: const TextStyle(
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0,
+                          vertical: 8.0,
+                        ),
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.upload,
                               color: Colors.white,
+                              size: 17,
                             ),
-                          ),
+                            const Padding(padding: EdgeInsets.only(left: 7.0)),
+                            Text(
+                              "Import",
+                              style: GoogleFonts.poppins(
+                                textStyle: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ]),
+                      ),
                     ),
                   ),
                   const Icon(
