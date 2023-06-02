@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'components/nav.dart';
+import 'components/bottom_nav.dart';
 import 'components/month_entry.dart';
 
 void main() {
@@ -160,6 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
             ),
+            const BottomNav(),
           ],
         ),
       ),
