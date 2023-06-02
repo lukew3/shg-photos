@@ -246,61 +246,87 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Expanded(
-              child: ListView(
+              child: ListView.builder(
                 padding: const EdgeInsets.all(10.0),
-                children: [
-                  for (var month in _data)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 52.0),
-                          child: Text(
-                            "${month['month']} ${month['year']}",
-                            style: GoogleFonts.poppins(
-                              // Doesn't match exactly because Google Sans is used in official app. Roboto may be a good alternative.
-                              textStyle: const TextStyle(
-                                color: Color(0xFF3C4043),
-                                fontWeight: FontWeight.w400,
-                              ),
-                              fontSize: 28,
-                            ),
-                          ),
-                        ),
-                        for (var day in month['days'])
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 17.0),
-                                child: Text(
-                                  "${day['day']}",
-                                  style: GoogleFonts.poppins(
-                                    textStyle: const TextStyle(
-                                      color: Color(0xFF3C4043),
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  for (var photo in day['photos'])
-                                    Image.network(photo),
-                                ],
-                              )
-                            ],
-                          )
-                      ],
-                    ),
-                ],
+                itemCount: _data.length,
+                itemBuilder: (context, index) {
+                  return MonthEntry(month: _data[index]);
+                },
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class MonthEntry extends StatelessWidget {
+  final Map<String, dynamic> month;
+
+  const MonthEntry({Key? key, required this.month}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 52.0),
+          child: Text(
+            "${month['month']} ${month['year']}",
+            style: GoogleFonts.poppins(
+              // Doesn't match exactly because Google Sans is used in official app. Roboto may be a good alternative.
+              textStyle: const TextStyle(
+                color: Color(0xFF3C4043),
+                fontWeight: FontWeight.w400,
+              ),
+              fontSize: 28,
+            ),
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              for (var day in month['days']) DayEntry(day: day),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class DayEntry extends StatelessWidget {
+  final Map<String, dynamic> day;
+
+  const DayEntry({Key? key, required this.day}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 17.0),
+          child: Text(
+            "${day['day']}",
+            style: GoogleFonts.poppins(
+              textStyle: const TextStyle(
+                color: Color(0xFF3C4043),
+                fontWeight: FontWeight.w400,
+              ),
+              fontSize: 14,
+            ),
+          ),
+        ),
+        Row(
+          children: [
+            for (var photo in day['photos']) Image.network(photo),
+          ],
+        ),
+      ],
     );
   }
 }
