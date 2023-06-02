@@ -78,6 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
             'https://picsum.photos/200/200',
             'https://picsum.photos/200/200',
             'https://picsum.photos/200/200',
+            'https://picsum.photos/200/200',
+            'https://picsum.photos/200/200',
+            'https://picsum.photos/200/200',
           ],
         },
       ],
@@ -321,10 +324,18 @@ class DayEntry extends StatelessWidget {
             ),
           ),
         ),
-        Row(
-          children: [
-            for (var photo in day['photos']) Image.network(photo),
-          ],
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            mainAxisSpacing: 4,
+            crossAxisSpacing: 4,
+          ),
+          itemCount: day['photos'].length,
+          itemBuilder: (context, index) {
+            return Image.network(day['photos'][index]);
+          },
         ),
       ],
     );
