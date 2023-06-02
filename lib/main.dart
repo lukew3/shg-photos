@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'components/nav.dart';
+import 'components/month_entry.dart';
 
 void main() {
   runApp(const MyApp());
@@ -148,106 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(15.0),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      color: const Color.fromRGBO(218, 220, 224, 1))),
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(right: 25.0),
-                    child: Text(
-                      'SHGPhotos',
-                      style: GoogleFonts.poppins(
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      decoration: const BoxDecoration(
-                        color: Color.fromRGBO(241, 243, 244, 1),
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.search,
-                            color: Color.fromRGBO(95, 99, 104, 1),
-                            semanticLabel: 'Search',
-                          ),
-                          Expanded(
-                            child: TextField(
-                              style: GoogleFonts.poppins(
-                                textStyle: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Search your photos',
-                                contentPadding: EdgeInsets.only(left: 10.0),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (states) {
-                            return (states.contains(MaterialState.hovered)
-                                ? const Color.fromRGBO(19, 96, 196, 1)
-                                : const Color.fromRGBO(26, 115, 232, 1));
-                          },
-                        ),
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0,
-                          vertical: 8.0,
-                        ),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.upload,
-                              color: Colors.white,
-                              size: 17,
-                            ),
-                            const Padding(padding: EdgeInsets.only(left: 7.0)),
-                            Text(
-                              "Import",
-                              style: GoogleFonts.poppins(
-                                textStyle: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Icon(
-                    Icons.more_vert,
-                    semanticLabel: 'More',
-                  )
-                ],
-              ),
-            ),
+            const Nav(),
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.all(10.0),
@@ -260,84 +163,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class MonthEntry extends StatelessWidget {
-  final Map<String, dynamic> month;
-
-  const MonthEntry({Key? key, required this.month}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 52.0),
-          child: Text(
-            "${month['month']} ${month['year']}",
-            style: GoogleFonts.poppins(
-              // Doesn't match exactly because Google Sans is used in official app. Roboto may be a good alternative.
-              textStyle: const TextStyle(
-                color: Color(0xFF3C4043),
-                fontWeight: FontWeight.w400,
-              ),
-              fontSize: 28,
-            ),
-          ),
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              for (var day in month['days']) DayEntry(day: day),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class DayEntry extends StatelessWidget {
-  final Map<String, dynamic> day;
-
-  const DayEntry({Key? key, required this.day}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 17.0),
-          child: Text(
-            "${day['day']}",
-            style: GoogleFonts.poppins(
-              textStyle: const TextStyle(
-                color: Color(0xFF3C4043),
-                fontWeight: FontWeight.w400,
-              ),
-              fontSize: 14,
-            ),
-          ),
-        ),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 200,
-            mainAxisSpacing: 4,
-            crossAxisSpacing: 4,
-          ),
-          itemCount: day['photos'].length,
-          itemBuilder: (context, index) {
-            return Image.network(day['photos'][index]);
-          },
-        ),
-      ],
     );
   }
 }
